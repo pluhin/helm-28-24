@@ -57,6 +57,17 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+pvc:
+  storage_class: nfs-app
+  storage_size: 100Mi
+
+volumeMounts:
+  - name: persistent-storage
+    mountPath: "/var/www/html"
+volumes:
+  - name: persistent-storage
+    persistentVolumeClaim:
+      claimName: pv-claim-helm
 
 resources:
   limits:
@@ -83,14 +94,14 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
+#volumes: []
 # - name: foo
 #   secret:
 #     secretName: mysecret
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+#volumeMounts: []
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
